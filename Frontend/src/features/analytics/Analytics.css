@@ -1,0 +1,90 @@
+/* Analytics layout: KPI grid, chart grids, tables. No sidebar. */
+
+.an-kpis {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+.an-kpi {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.an-delta-up {
+  color: var(--success-text);
+}
+.an-delta-down {
+  color: var(--danger-text);
+}
+.an-delta-flat {
+  color: var(--text-muted);
+}
+
+.an-grid-2 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: start;
+}
+.an-funnel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.an-funnel-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 48px;
+  gap: var(--space-3);
+  align-items: center;
+}
+.an-funnel-bar {
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-active);
+  overflow: hidden;
+}
+.an-funnel-fill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--accent-primary);
+}
+
+.an-bar {
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-active);
+  overflow: hidden;
+}
+.an-bar > div {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--accent-primary);
+}
+.an-bar--warn > div {
+  background: var(--warning-text);
+}
+
+@media (max-width: 1280px) {
+  .an-kpis {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 1023px) {
+  .an-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 767px) {
+  .an-kpis {
+    grid-template-columns: 1fr 1fr;
+  }
+  .an-funnel-row {
+    grid-template-columns: 96px 1fr 40px;
+  }
+}

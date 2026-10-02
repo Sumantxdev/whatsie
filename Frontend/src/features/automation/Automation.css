@@ -1,0 +1,177 @@
+/* Automation layout: stats, toolbar, workflow rows, canvas, branches. No sidebar. */
+
+.af-stats {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+.af-stat {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.af-toolbar {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+.af-toolbar .wx-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.af-search {
+  min-width: 220px;
+  flex: 1;
+}
+
+.af-canvas {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  padding: var(--space-6) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+}
+
+.af-node {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-3) var(--space-4);
+  width: min(420px, 100%);
+  margin: 0 auto;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+button.af-node {
+  cursor: pointer;
+}
+button.af-node:hover {
+  border-color: var(--border-strong);
+}
+.af-node[data-selected='true'] {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-primary-ring);
+}
+.af-node[data-invalid='true'] {
+  border-color: var(--danger-border);
+}
+.af-node--trigger {
+  border-width: 2px;
+}
+
+.af-link {
+  width: 2px;
+  min-height: 20px;
+  background: var(--border-strong);
+  margin: 0 auto;
+  flex-shrink: 0;
+}
+
+.af-add {
+  display: flex;
+  justify-content: center;
+  padding: 2px 0;
+}
+.af-add-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px dashed var(--border-strong);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: 16px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.af-add-btn:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.af-branches {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-4);
+  width: 100%;
+}
+.af-branch {
+  border: 1px dashed var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+}
+.af-branch > .af-branch-label {
+  text-align: center;
+  margin-bottom: var(--space-2);
+}
+
+.af-stepmenu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 240px;
+}
+.af-stepmenu button {
+  text-align: left;
+  border: 1px solid transparent;
+  background: transparent;
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.af-stepmenu button:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-subtle);
+}
+
+.af-runstep {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.af-runstep:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 1023px) {
+  .af-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 767px) {
+  .af-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+  .af-branches {
+    grid-template-columns: 1fr;
+  }
+  .af-canvas {
+    padding: var(--space-4) var(--space-2);
+  }
+}

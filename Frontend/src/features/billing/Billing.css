@@ -1,0 +1,94 @@
+/* Billing layout: KPI cards, chart grids, tables. No sidebar. */
+
+.bi-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+.bi-kpi {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.bi-grid-2 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.bi-bar {
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-active);
+  overflow: hidden;
+}
+.bi-bar > div {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--accent-primary);
+}
+.bi-bar--warn > div {
+  background: var(--warning-text);
+}
+
+.bi-toolbar {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+.bi-toolbar .wx-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.bi-search {
+  min-width: 220px;
+  flex: 1;
+}
+
+.bi-tablewrap {
+  display: block;
+}
+.bi-cards {
+  display: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.bi-card {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+@media (max-width: 1023px) {
+  .bi-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .bi-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 767px) {
+  .bi-tablewrap {
+    display: none;
+  }
+  .bi-cards {
+    display: flex;
+  }
+}

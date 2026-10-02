@@ -1,0 +1,98 @@
+/* Channels layout: stats, toolbar, platform grid, detail tabs. No sidebar. */
+
+.ch-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+.ch-stat {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ch-toolbar {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+.ch-toolbar .wx-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ch-search {
+  min-width: 220px;
+  flex: 1;
+}
+
+.ch-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+.ch-card {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: inherit;
+}
+.ch-card:hover {
+  border-color: var(--border-strong);
+  text-decoration: none;
+}
+
+.ch-cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.ch-connect-steps {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.ch-progress {
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-active);
+  overflow: hidden;
+}
+.ch-progress > div {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--info-text);
+}
+
+@media (max-width: 1023px) {
+  .ch-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ch-grid {
+    grid-template-columns: 1fr;
+  }
+  .ch-cols {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 767px) {
+  .ch-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+}

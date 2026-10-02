@@ -1,0 +1,321 @@
+import type { Execution, Workflow, WorkflowTemplate } from './types'
+
+/* Isolated automation mock. Covers active / draft / disabled, condition
+   branches, failed executions, lead updates, AI events, multi-step flows. */
+
+let n = 0
+const sid = (p: string): string => `${p}-${(n += 1)}`
+
+export const workflowMock: Workflow[] = [
+  {
+    id: 'wf-welcome',
+    name: 'Welcome series',
+    description: 'Greets first-time customers and offers help getting started.',
+    status: 'active',
+    trigger: { type: 'event', value: 'message received' },
+    steps: [
+      {
+        id: sid('s'),
+        type: 'message',
+        message: { text: 'Hi {name}! Thanks for reaching out — how can we help today?' },
+        yes: [],
+        no: [],
+      },
+      { id: sid('s'), type: 'wait', wait: { amount: 2, unit: 'hours' }, yes: [], no: [] },
+      {
+        id: sid('s'),
+        type: 'message',
+        message: { text: 'Still there? Reply HELP anytime and a human will jump in.' },
+        yes: [],
+        no: [],
+      },
+    ],
+    updated: '2h ago',
+    runs24h: 61,
+    failRate: '0%',
+    lastRun: '12m ago',
+  },
+  {
+    id: 'wf-cart',
+    name: 'Abandoned cart follow-up',
+    description: 'Nudges shoppers who went quiet, then routes hot leads to sales.',
+    status: 'active',
+    trigger: { type: 'event', value: 'message received' },
+    steps: [
+      { id: sid('s'), type: 'wait', wait: { amount: 24, unit: 'hours' }, yes: [], no: [] },
+      {
+        id: sid('s'),
+        type: 'condition',
+        condition: { variable: 'message.text', operator: 'contains', value: 'price' },
+        yes: [
+          {
+            id: sid('s'),
+            type: 'message',
+            message: { text: 'Good news — the starter pack is $49 this month. Want the link?' },
+            yes: [],
+            no: [],
+          },
+          {
+            id: sid('s'),
+            type: 'update_lead',
+            lead: { status: 'qualified', assignee: 'Sam Reed', addTags: 'hot-lead' },
+            yes: [],
+            no: [],
+          },
+        ],
+        no: [
+          {
+            id: sid('s'),
+            type: 'message',
+            message: { text: 'Just checking in — anything we can help with?' },
+            yes: [],
+            no: [],
+          },
+        ],
+      },
+    ],
+    updated: '1d ago',
+    runs24h: 34,
+    failRate: '6%',
+    lastRun: '26m ago',
+  },
+  {
+    id: 'wf-qualification',
+    name: 'Lead qualification',
+    description: 'Scores inbound interest and assigns qualified leads.',
+    status: 'active',
+    trigger: { type: 'intent', value: 'pricing_inquiry' },
+    steps: [
+      {
+        id: sid('s'),
+        type: 'api_call',
+        api: {
+          method: 'GET',
+          url: 'https://crm.example.com/api/score?phone={phone}',
+          headers: [{ key: 'Authorization', value: 'Bearer ••••••••' }],
+          body: '',
+        },
+        yes: [],
+        no: [],
+      },
+      {
+        id: sid('s'),
+        type: 'update_lead',
+        lead: { status: 'qualified', assignee: 'Ava Stone', addTags: '' },
+        yes: [],
+        no: [],
+      },
+      {
+        id: sid('s'),
+        type: 'message',
+        message: { text: 'Thanks {name}! Someone from our team will follow up shortly.' },
+        yes: [],
+        no: [],
+      },
+    ],
+    updated: '3d ago',
+    runs24h: 28,
+    failRate: '0%',
+    lastRun: '41m ago',
+  },
+  {
+    id: 'wf-pricing-kw',
+    name: 'Pricing auto-reply',
+    description: 'Instant answer whenever a message mentions pricing.',
+    status: 'disabled',
+    trigger: { type: 'keyword', value: 'pricing', match: 'contains' },
+    steps: [
+      {
+        id: sid('s'),
+        type: 'message',
+        message: { text: 'Our plans start at $49/mo. Full details: help.example.com/pricing' },
+        yes: [],
+        no: [],
+      },
+    ],
+    updated: '5d ago',
+    runs24h: 0,
+    failRate: '—',
+    lastRun: 'never',
+  },
+  {
+    id: 'wf-renewal',
+    name: 'Renewal check-in',
+    description: 'Draft: enterprise renewal outreach with AI summarised usage.',
+    status: 'draft',
+    trigger: { type: 'event', value: 'lead status changed' },
+    steps: [{ id: sid('s'), type: 'message', message: { text: '' }, yes: [], no: [] }],
+    updated: '20m ago',
+    runs24h: 0,
+    failRate: '—',
+    lastRun: 'never',
+  },
+  {
+    id: 'wf-ai-fallback',
+    name: 'AI fallback handler',
+    description: 'Catches AI-called failures and escalates with context.',
+    status: 'active',
+    trigger: { type: 'event', value: 'AI called' },
+    steps: [
+      {
+        id: sid('s'),
+        type: 'condition',
+        condition: { variable: 'conversation.state', operator: 'is', value: 'escalated' },
+        yes: [
+          {
+            id: sid('s'),
+            type: 'update_lead',
+            lead: { status: 'no-change', assignee: 'Ava Stone', addTags: 'escalated' },
+            yes: [],
+            no: [],
+          },
+        ],
+        no: [
+          { id: sid('s'), type: 'wait', wait: { amount: 5, unit: 'minutes' }, yes: [], no: [] },
+          {
+            id: sid('s'),
+            type: 'message',
+            message: { text: 'Still working on that — thanks for your patience.' },
+            yes: [],
+            no: [],
+          },
+        ],
+      },
+    ],
+    updated: '6h ago',
+    runs24h: 12,
+    failRate: '8%',
+    lastRun: '1h ago',
+  },
+]
+
+export const executionMock: Execution[] = [
+  {
+    id: 'ex-1042',
+    workflowId: 'wf-cart',
+    workflowName: 'Abandoned cart follow-up',
+    triggerLabel: 'message received',
+    leadName: 'Maya Rao',
+    leadId: 'l-maya',
+    conversationId: 'c-maya',
+    started: '26m ago',
+    duration: '1m 04s',
+    status: 'failed',
+    error: 'API Call timed out after 30s — no lead was updated.',
+    steps: [
+      {
+        stepId: 'x1',
+        label: 'Wait 24 hours (simulated)',
+        status: 'done',
+        detail: 'Delay satisfied in test data',
+      },
+      {
+        stepId: 'x2',
+        label: 'Condition: message contains “price” → Yes',
+        status: 'done',
+        detail: 'Matched branch: Yes',
+      },
+      { stepId: 'x3', label: 'Send Message', status: 'done', detail: 'Delivered via WhatsApp' },
+      {
+        stepId: 'x4',
+        label: 'Update Lead → qualified',
+        status: 'failed',
+        error: 'CRM write timed out after 30s',
+      },
+    ],
+  },
+  {
+    id: 'ex-1041',
+    workflowId: 'wf-welcome',
+    workflowName: 'Welcome series',
+    triggerLabel: 'message received',
+    leadName: '+1 415 220 1932',
+    leadId: null,
+    conversationId: null,
+    started: '41m ago',
+    duration: '2h 00m',
+    status: 'running',
+    steps: [
+      { stepId: 'x1', label: 'Send Message', status: 'done', detail: 'Delivered' },
+      {
+        stepId: 'x2',
+        label: 'Wait 2 hours',
+        status: 'running',
+        detail: '1h 12m elapsed (mock clock)',
+      },
+      { stepId: 'x3', label: 'Send Message', status: 'pending' },
+    ],
+  },
+  {
+    id: 'ex-1040',
+    workflowId: 'wf-qualification',
+    workflowName: 'Lead qualification',
+    triggerLabel: 'intent: pricing_inquiry',
+    leadName: 'Tom Becker',
+    leadId: 'l-tom',
+    conversationId: 'c-tom',
+    started: '2h ago',
+    duration: '48s',
+    status: 'completed',
+    steps: [
+      { stepId: 'x1', label: 'API Call GET score', status: 'done', detail: '200 · score 82' },
+      {
+        stepId: 'x2',
+        label: 'Update Lead → qualified',
+        status: 'done',
+        detail: 'Owner: Ava Stone',
+      },
+      { stepId: 'x3', label: 'Send Message', status: 'done', detail: 'Delivered via Telegram' },
+    ],
+  },
+  {
+    id: 'ex-1039',
+    workflowId: 'wf-ai-fallback',
+    workflowName: 'AI fallback handler',
+    triggerLabel: 'AI called',
+    leadName: 'Lena Ortiz',
+    leadId: 'l-lena',
+    conversationId: 'c-lena',
+    started: '3h ago',
+    duration: '22s',
+    status: 'cancelled',
+    steps: [
+      {
+        stepId: 'x1',
+        label: 'Condition: state is escalated → No',
+        status: 'done',
+        detail: 'Matched branch: No',
+      },
+      {
+        stepId: 'x2',
+        label: 'Wait 5 minutes',
+        status: 'skipped',
+        detail: 'Superseded by human takeover',
+      },
+    ],
+  },
+]
+
+export const templateMock: WorkflowTemplate[] = [
+  {
+    id: 'tpl-welcome',
+    name: 'Welcome series',
+    description: 'Greet new contacts, wait, then follow up once.',
+    trigger: { type: 'event', value: 'message received' },
+    stepCount: '3 steps',
+  },
+  {
+    id: 'tpl-cart',
+    name: 'Abandoned cart',
+    description: 'Wait 24h, branch on price interest, update the lead.',
+    trigger: { type: 'event', value: 'message received' },
+    stepCount: '4 steps · 1 branch',
+  },
+  {
+    id: 'tpl-qualify',
+    name: 'Lead qualification',
+    description: 'Score via API, assign, and confirm with the customer.',
+    trigger: { type: 'intent', value: 'pricing_inquiry' },
+    stepCount: '3 steps',
+  },
+]

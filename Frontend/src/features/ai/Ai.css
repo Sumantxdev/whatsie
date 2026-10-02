@@ -1,0 +1,116 @@
+/* AI layout: list grid, detail tabs, config/test columns. No sidebar. */
+
+.ai-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.ai-agent-card {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  text-decoration: none;
+  color: inherit;
+}
+.ai-agent-card:hover {
+  border-color: var(--border-strong);
+  text-decoration: none;
+}
+
+.ai-cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.ai-quota {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.ai-bar {
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-active);
+  overflow: hidden;
+}
+.ai-bar > div {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--accent-primary);
+}
+.ai-bar--warn > div {
+  background: var(--warning-text);
+}
+
+.ai-test-thread {
+  list-style: none;
+  margin: 0;
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  min-height: 220px;
+  max-height: 380px;
+  overflow-y: auto;
+}
+.ai-test-user {
+  align-self: flex-end;
+  background: var(--accent-primary-tint);
+  border-radius: var(--radius-bubble) var(--radius-bubble) 4px var(--radius-bubble);
+  padding: 8px 12px;
+  max-width: 80%;
+}
+.ai-test-ai {
+  align-self: flex-start;
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-bubble) var(--radius-bubble) var(--radius-bubble) 4px;
+  padding: 8px 12px;
+  max-width: 85%;
+}
+.ai-test-sys {
+  align-self: center;
+  background: var(--surface-hover);
+  border-radius: var(--radius-pill);
+  padding: 4px 12px;
+}
+
+.ai-toolbar {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+.ai-toolbar .wx-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ai-search {
+  min-width: 220px;
+  flex: 1;
+}
+
+@media (max-width: 1023px) {
+  .ai-grid {
+    grid-template-columns: 1fr;
+  }
+  .ai-cols {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,110 @@
+/* CRM layout: toolbar, table/cards, pipeline, detail grid. No sidebar. */
+
+.crm-toolbar {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+.crm-toolbar .wx-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.crm-search {
+  min-width: 220px;
+  flex: 1;
+}
+
+.crm-bulkbar {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  flex-wrap: wrap;
+  background: var(--surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-2) var(--space-3);
+}
+.crm-bulkbar .wx-caption {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.crm-tablewrap {
+  display: block;
+}
+.crm-cards {
+  display: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.crm-card {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.crm-pipeline {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-3);
+  overflow-x: auto;
+}
+.crm-pipe-col {
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 220px;
+}
+.crm-pipe-card {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.crm-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-8);
+  align-items: start;
+}
+
+@media (max-width: 1023px) {
+  .crm-detail-grid {
+    grid-template-columns: 1fr;
+  }
+  .crm-pipeline {
+    grid-template-columns: repeat(5, minmax(220px, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .crm-tablewrap {
+    display: none;
+  }
+  .crm-cards {
+    display: flex;
+  }
+  .crm-toolbar .wx-select {
+    min-height: 40px;
+  }
+}

@@ -1,0 +1,82 @@
+/* Team layout: stats, toolbar, table/cards, matrix, audit. No sidebar. */
+
+.tm-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+.tm-stat {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tm-toolbar {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+.tm-toolbar .wx-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.tm-search {
+  min-width: 220px;
+  flex: 1;
+}
+
+.tm-tablewrap {
+  display: block;
+}
+.tm-cards {
+  display: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.tm-card {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.tm-viewas {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  background: var(--warning-bg);
+  border: 1px solid var(--warning-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+}
+
+@media (max-width: 1023px) {
+  .tm-tablewrap {
+    overflow-x: auto;
+  }
+}
+@media (max-width: 767px) {
+  .tm-tablewrap {
+    display: none;
+  }
+  .tm-cards {
+    display: flex;
+  }
+  .tm-stats {
+    grid-template-columns: 1fr;
+  }
+}

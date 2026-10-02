@@ -1,0 +1,213 @@
+/* Home dashboard layout. Token-driven; no raw values. Attention first on mobile. */
+
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.home-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+}
+
+.home-metric {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.home-cols {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.home-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  min-width: 0;
+}
+
+.home-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-4);
+}
+
+.home-section-head .wx-link-btn {
+  color: var(--accent-primary-text);
+  text-decoration: none;
+}
+
+.home-section-head .wx-link-btn:hover {
+  color: var(--accent-primary-active);
+}
+
+.home-channel-list {
+  gap: var(--space-2);
+}
+
+a.home-channel {
+  --ch-bg: var(--accent-primary-subtle);
+  --ch-border: var(--accent-primary-border-soft);
+  --ch-hover: var(--accent-primary-tint);
+  --ch-accent: var(--accent-primary-text);
+  --ch-icon-bg: var(--accent-primary-tint);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--ch-bg);
+  border: 1px solid var(--ch-border);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: inherit;
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+
+a.home-channel:hover {
+  background: var(--ch-hover);
+  border-color: var(--ch-border);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+}
+
+a.home-channel:active {
+  background: var(--ch-hover);
+  border-color: var(--ch-border);
+}
+
+.home-channel-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  background: var(--ch-icon-bg);
+  border: 1px solid var(--ch-border);
+  border-radius: var(--radius-md);
+  color: var(--ch-accent);
+}
+
+.home-channel-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.home-channel-status {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.home-exec-list {
+  gap: var(--space-2);
+}
+
+li.home-exec {
+  --ex-bg: var(--surface);
+  --ex-border: var(--border-subtle);
+  --ex-hover: var(--surface-hover);
+  --ex-accent: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--ex-bg);
+  border: 1px solid var(--ex-border);
+  border-radius: var(--radius-lg);
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+li.home-exec:hover {
+  background: var(--ex-hover);
+}
+
+.wx-badge.home-exec-pill {
+  background: var(--ex-hover);
+  border-color: var(--ex-border);
+  color: var(--ex-accent);
+}
+
+.home-funnel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.home-funnel-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 48px;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.home-funnel-bar {
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-active);
+  overflow: hidden;
+}
+
+.home-funnel-fill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--accent-primary);
+}
+
+.home-quick {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
+}
+
+@media (max-width: 1023px) {
+  .home-metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .home-cols {
+    grid-template-columns: 1fr;
+  }
+  .home-quick {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .home {
+    gap: var(--space-6);
+  }
+  .home-channel {
+    flex-wrap: wrap;
+  }
+  .home-channel-status {
+    margin-left: 44px;
+  }
+  .home-metrics {
+    grid-template-columns: 1fr;
+  }
+  .home-attention {
+    order: -1;
+  }
+  .home-quick {
+    grid-template-columns: 1fr;
+  }
+  .home-funnel-row {
+    grid-template-columns: 96px 1fr 40px;
+  }
+}

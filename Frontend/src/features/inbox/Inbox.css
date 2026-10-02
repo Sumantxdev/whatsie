@@ -1,0 +1,342 @@
+/* Inbox layout: list + workspace + context. No app sidebar; panes only. */
+
+.ib-wrap {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  gap: var(--space-4);
+  height: calc(100svh - 230px);
+  min-height: 480px;
+}
+
+.ib-listpane {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.ib-search {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+.ib-search .wx-input {
+  flex: 1;
+}
+
+.ib-filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+.ib-filter-select {
+  min-height: 36px;
+  font-size: var(--text-sm-size);
+}
+
+.ib-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.ib-rowlink {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: inherit;
+}
+.ib-rowlink:hover {
+  background: var(--surface-hover);
+  text-decoration: none;
+}
+.ib-rowlink--active {
+  background: var(--accent-primary-tint);
+}
+.ib-rowmain {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.ib-rowtop {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+  align-items: baseline;
+}
+.ib-rowname {
+  font-size: var(--text-body-size);
+  font-weight: var(--weight-medium);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ib-rowname--unread {
+  font-weight: var(--weight-semibold);
+}
+.ib-rowpreview {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ib-rowtags {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.ib-detail {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  min-height: 0;
+  overflow: hidden;
+}
+.ib-detail--empty {
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+}
+.ib-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.ib-chead {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.ib-back {
+  display: none;
+  color: inherit;
+}
+.ib-chead-main {
+  flex: 1;
+  min-width: 0;
+}
+.ib-chead-actions {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.ib-aibar {
+  padding: var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-base);
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.ib-thread {
+  flex: 1;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-height: 0;
+}
+
+.ib-row {
+  display: flex;
+}
+.ib-row--in {
+  justify-content: flex-start;
+}
+.ib-row--out {
+  justify-content: flex-end;
+}
+
+.ib-bubble {
+  max-width: 68%;
+  padding: 10px 14px;
+  border-radius: var(--radius-bubble);
+  border: 1px solid transparent;
+}
+.ib-bubble--in {
+  background: var(--surface);
+  border-color: var(--border-subtle);
+  border-bottom-left-radius: 4px;
+}
+.ib-bubble--out {
+  background: var(--accent-primary-tint);
+  border-bottom-right-radius: 4px;
+}
+
+.ib-sys {
+  align-self: center;
+  background: var(--surface-hover);
+  border-radius: var(--radius-pill);
+  padding: 4px 12px;
+  display: flex;
+  gap: 4px;
+}
+
+.ib-quote {
+  margin: 0 0 6px;
+  padding: 4px 8px;
+  border-left: 2px solid var(--accent-primary);
+  background: rgba(124, 58, 237, 0.08);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.ib-attach {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  margin-bottom: 6px;
+}
+.ib-attach-thumb,
+.ib-attach-file {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--surface-active);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ib-quick {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.ib-quick-chip {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-pill);
+  padding: 4px 12px;
+  font-size: var(--text-sm-size);
+  background: var(--surface);
+}
+
+.ib-meta {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: 4px;
+}
+.ib-delivery {
+  font-style: normal;
+}
+
+.ib-typing {
+  display: inline-flex;
+  gap: 4px;
+  margin-right: 8px;
+}
+.ib-typing i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  animation: wx-pulse 1.2s infinite;
+}
+.ib-typing i:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.ib-typing i:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.ib-composer {
+  border-top: 1px solid var(--border-subtle);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.ib-replybar {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  background: var(--bg-base);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+}
+.ib-composer-row {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-end;
+}
+.ib-composer-input {
+  flex: 1;
+  min-height: 44px;
+}
+
+.ib-context {
+  width: 300px;
+  flex-shrink: 0;
+  border-left: 1px solid var(--border-subtle);
+  padding: var(--space-4);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Tablet: narrower list, context becomes drawer-only */
+@media (max-width: 1399px) {
+  .ib-context {
+    display: none;
+  }
+}
+@media (max-width: 1023px) {
+  .ib-wrap {
+    grid-template-columns: 280px minmax(0, 1fr);
+  }
+}
+
+/* Mobile: single-pane flow list → conversation → context(drawer) */
+@media (max-width: 767px) {
+  .ib-wrap {
+    grid-template-columns: 1fr;
+    height: calc(100svh - 210px);
+    min-height: 420px;
+  }
+  .ib-wrap[data-pane='list'] .ib-detail {
+    display: none;
+  }
+  .ib-wrap[data-pane='detail'] .ib-listpane {
+    display: none;
+  }
+  .ib-back {
+    display: inline-flex;
+  }
+  .ib-bubble {
+    max-width: 85%;
+  }
+  .ib-filters {
+    grid-template-columns: 1fr 1fr;
+  }
+  .ib-chead-actions {
+    gap: 4px;
+  }
+}
